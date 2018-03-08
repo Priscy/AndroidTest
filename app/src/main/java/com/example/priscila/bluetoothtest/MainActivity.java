@@ -12,7 +12,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattDescriptor;
-
+import android.view.Menu;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 
 import java.util.ArrayList;
@@ -36,18 +37,23 @@ import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
     private final static int REQUEST_ENABLE_BT = 1;
 
+    Context context;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothManager bluetoothManager;
     BluetoothGatt mBluetoothGatt;
     Handler handler = new Handler();
+    Intent intent;
 
     Button startScann;
     Button btnConect;
     EditText indexInput;
     TextView devicesTextView;
     TextView stateTextView;
+    TextView fallsTv;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         devicesTextView = (TextView) findViewById(R.id.devicesTextView);
         devicesTextView.setMovementMethod(new ScrollingMovementMethod());
+
 
         stateTextView = (TextView) findViewById(R.id.stateTextView);
 
@@ -129,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 devicesDiscovered.add(result.getDevice());
                 deviceIndex++;
 
-                // auto scroll for text view
-                final int scrollAmount = devicesTextView.getLayout().getLineTop(devicesTextView.getLineCount()) - devicesTextView.getHeight();
-                // if there is no need to scroll, scrollAmount will be <=0
+                //auto scroll for text view
+               final int scrollAmount = devicesTextView.getLayout().getLineTop(devicesTextView.getLineCount()) - devicesTextView.getHeight();
+               //if there is no need to scroll, scrollAmount will be <=0
                 if (scrollAmount > 0) {
                     devicesTextView.scrollTo(0, scrollAmount);
                 }
@@ -152,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                         devicesTextView.append("Device Connected" + "\n");
                     }
                 });
+
                 mBluetoothGatt.discoverServices();
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
@@ -238,21 +246,29 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d(TAG, "Heart rate format UINT8.");
             }
             final int heartRate = characteristic.getIntValue(format, 1);
-           // Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    devicesTextView.append( "\n" +"Heart Rate: " + heartRate +  "\n");
-                }
-            });
+
+
+            if (heartRate == 201) {
+                startActivity(new Intent(MainActivity.this, falls.class));
+            } else {
+
+
+                // Log.d(TAG, String.format("Received heart rate: %d", heartRate));
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        devicesTextView.append("\n" + "Heart Rate: " + heartRate + "\n");
+                    }
+                });
+            }
 
         } else {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    devicesTextView.append( "\n" +"Not a heart rate profile"+  "\n");
-                }
-            });
+//            MainActivity.this.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    devicesTextView.append( "\n" +"Not a heart rate profile"+  "\n");
+//                }
+//            });
         }
 
     }
