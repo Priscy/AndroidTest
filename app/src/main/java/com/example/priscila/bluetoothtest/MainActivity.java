@@ -12,7 +12,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattDescriptor;
-import android.view.Menu;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +27,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.content.Intent;
 
 
 import java.util.ArrayList;
@@ -41,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int REQUEST_ENABLE_BT = 1;
 
-    Context context;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothManager bluetoothManager;
     BluetoothGatt mBluetoothGatt;
@@ -55,12 +52,19 @@ public class MainActivity extends AppCompatActivity {
     TextView stateTextView;
     TextView fallsTv;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+    private static final int ALERT_HIGH = 2;
 
     public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
     public final UUID HEART_RATE_SERVICE_UUID = convertFromInteger(0x180D);
     public final UUID  HEART_RATE_MEASUREMENT_CHAR_UUID = convertFromInteger(0x2A37);
     public final UUID  HEART_RATE_CONTROL_POINT_CHAR_UUID = convertFromInteger(0x2A39);
     public final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = convertFromInteger(0x2902);
+    public final UUID ALERT_NOTIFICATION_SERVICE = convertFromInteger(0x1811);
+    public final UUID NEW_ALERT_CHAR = convertFromInteger(0x2A46);
+    public final UUID ALERT_NOTIFICATION_CONTROLPNT = convertFromInteger(0x2A44);
+    public final UUID CATEGORY_ID_CHAR=convertFromInteger(0x2A43);
+    public final UUID BATTERY_SERVICE=convertFromInteger(0x180f);
+    public final UUID BATTERY_CHAR=convertFromInteger(0x2A19);
 
     public final static String ACTION_DATA_AVAILABLE =
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
@@ -188,21 +192,24 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                     BluetoothGattCharacteristic characteristic =
-                            gatt.getService(HEART_RATE_SERVICE_UUID)
-                                    .getCharacteristic(HEART_RATE_MEASUREMENT_CHAR_UUID);
-                    gatt.setCharacteristicNotification(characteristic, true);
+                            gatt.getService(HEART_RATE_SERVICE_UUID).getCharacteristic(HEART_RATE_MEASUREMENT_CHAR_UUID);
 
+                    gatt.setCharacteristicNotification(characteristic, true);
                     BluetoothGattDescriptor descriptor =
                             characteristic.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG_UUID);
 
                     descriptor.setValue(
                             BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                     gatt.writeDescriptor(descriptor);
+
+
+
                 }
             } else {
                devicesTextView.append("error on services");
             }
         }
+
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, int status) {
@@ -235,21 +242,33 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
-        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
+        if (HEART_RATE_MEASUREMENT_CHAR_UUID.equals(characteristic.getUuid())) {
+
             int flag = characteristic.getProperties();
             int format = -1;
             if ((flag & 0x01) != 0) {
                 format = BluetoothGattCharacteristic.FORMAT_UINT16;
-                //Log.d(TAG, "Heart rate format UINT16.");
+
             } else {
                 format = BluetoothGattCharacteristic.FORMAT_UINT8;
-                //Log.d(TAG, "Heart rate format UINT8.");
             }
-            final int heartRate = characteristic.getIntValue(format, 1);
+
+            final int alert = characteristic.getIntValue(format,1);
 
 
-            if (heartRate == 201) {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    devicesTextView.append("\n" + "Alert: " + alert + "\n");
+                }
+            });
+
+            if (alert == 71) {
                 startActivity(new Intent(MainActivity.this, falls.class));
+
+            } else if (alert == 70){
+
+                setValueVibration();
             } else {
 
 
@@ -257,18 +276,20 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        devicesTextView.append("\n" + "Heart Rate: " + heartRate + "\n");
+                        devicesTextView.append("\n" + "Value: " + alert + "\n");
                     }
                 });
             }
 
-        } else {
-//            MainActivity.this.runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    devicesTextView.append( "\n" +"Not a heart rate profile"+  "\n");
-//                }
-//            });
+        } else  if (BATTERY_CHAR.equals(characteristic.getUuid())){
+            final int batterylevel= characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,1);
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    devicesTextView.append("\n" + "Battery: " + batterylevel + "\n");
+                }
+            });
+
         }
 
     }
@@ -278,6 +299,17 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         mBluetoothGatt.readCharacteristic(characteristic);
+
+    }
+
+    public void setValueVibration(){
+        BluetoothGattCharacteristic characteristic =
+                mBluetoothGatt.getService(BATTERY_SERVICE)
+                        .getCharacteristic(BATTERY_CHAR);
+        characteristic.setValue(75,BluetoothGattCharacteristic.FORMAT_UINT8,1);
+        mBluetoothGatt.writeCharacteristic(characteristic);
+        broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+
 
     }
     public void startScan(final boolean enable){
