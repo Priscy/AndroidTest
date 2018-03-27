@@ -19,13 +19,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Debug;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -34,16 +37,18 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class MainActivity extends AppCompatActivity {
-
+public class BluetoothController extends AppCompatActivity {
+    private static final String TAG = "---PRISCILA---";
 
     private final static int REQUEST_ENABLE_BT = 1;
 
     BluetoothAdapter mBluetoothAdapter;
     BluetoothManager bluetoothManager;
     BluetoothGatt mBluetoothGatt;
+
     Handler handler = new Handler();
     Intent intent;
+    LinearLayout layoutBluetooth,layoutSplash;
 
     Button startScann;
     Button btnConect;
@@ -65,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     public final UUID CATEGORY_ID_CHAR=convertFromInteger(0x2A43);
     public final UUID BATTERY_SERVICE=convertFromInteger(0x180f);
     public final UUID BATTERY_CHAR=convertFromInteger(0x2A19);
+    public final UUID GENERIC_SERVICE = convertFromInteger(0x1800);
+    public final UUID DEVICE_NAME= convertFromInteger(0X2A00);
 
     public final static String ACTION_DATA_AVAILABLE =
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
@@ -78,7 +85,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bluetooth);
+
+        layoutBluetooth=(LinearLayout)findViewById(R.id.layoutBluetooth);
+        layoutSplash=(LinearLayout)findViewById(R.id.layoutSplash);
+
+
+        layoutBluetooth.setVisibility(LinearLayout.GONE);
+        layoutSplash.setVisibility(LinearLayout.VISIBLE);
 
         startScann = (Button) findViewById(R.id.scanBtn);
         startScann.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
             });
             builder.show();
         }
+       //startScan(true);
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] Results){
@@ -135,17 +151,23 @@ public class MainActivity extends AppCompatActivity {
     private ScanCallback leScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
+            Log.d(TAG,"INSIDE ON SCAN RESULT");
+
+           // Log.d(TAG,result.getDevice());
+            Log.i(TAG,result.toString());
+            //result.getDevice().getName() != null && result.getDevice().getName().startsWith("Pixky")==true && devicesDiscovered.contains(result.getDevice()) == false
+
             if (devicesDiscovered.contains(result.getDevice()) == false) {
+                changeLayout();
                 devicesTextView.append("Index: " + deviceIndex + " Device Name: " + result.getDevice().getName() + " rssi: " + result.getRssi() + "\n");
                 devicesDiscovered.add(result.getDevice());
                 deviceIndex++;
-
                 //auto scroll for text view
-               final int scrollAmount = devicesTextView.getLayout().getLineTop(devicesTextView.getLineCount()) - devicesTextView.getHeight();
+               //final int scrollAmount = devicesTextView.getLayout().getLineTop(devicesTextView.getLineCount()) - devicesTextView.getHeight();
                //if there is no need to scroll, scrollAmount will be <=0
-                if (scrollAmount > 0) {
-                    devicesTextView.scrollTo(0, scrollAmount);
-                }
+              //  if (scrollAmount > 0) {
+               //     devicesTextView.scrollTo(0, scrollAmount);
+              //  }
             }
         }
         public void onScanFailed(int errorCode) {
@@ -153,12 +175,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
+    public void changeLayout() {
+        Log.d(TAG,"INSIDE CHANGIND LAYOUT");
+        layoutBluetooth.setVisibility(LinearLayout.VISIBLE);
+        layoutSplash.setVisibility(LinearLayout.GONE);
+    }
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                MainActivity.this.runOnUiThread(new Runnable() {
+                BluetoothController.this.runOnUiThread(new Runnable() {
                     public void run() {
                         devicesTextView.append("Device Connected" + "\n");
                     }
@@ -167,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 mBluetoothGatt.discoverServices();
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                MainActivity.this.runOnUiThread(new Runnable() {
+                BluetoothController.this.runOnUiThread(new Runnable() {
                     public void run() {
                         devicesTextView.append("Device disconected");
                     }
@@ -184,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for (BluetoothGattService gattService : gattServices) {
                     final String serviceUUID = gattService.getUuid().toString();
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                    BluetoothController.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             devicesTextView.append( "\n" +"Servicio: " + serviceUUID +  "\n");
@@ -213,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, int status) {
-            MainActivity.this.runOnUiThread(new Runnable() {
+            BluetoothController.this.runOnUiThread(new Runnable() {
                 public void run() {
 
                     devicesTextView.append("On characteristic read"  +  "\n");
@@ -256,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             final int alert = characteristic.getIntValue(format,1);
 
 
-            MainActivity.this.runOnUiThread(new Runnable() {
+            BluetoothController.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     devicesTextView.append("\n" + "Alert: " + alert + "\n");
@@ -264,16 +292,15 @@ public class MainActivity extends AppCompatActivity {
             });
 
             if (alert == 71) {
-                startActivity(new Intent(MainActivity.this, falls.class));
+                startActivity(new Intent(BluetoothController.this, falls.class));
 
             } else if (alert == 70){
 
                 setValueVibration();
             } else {
 
-
                 // Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-                MainActivity.this.runOnUiThread(new Runnable() {
+                BluetoothController.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         devicesTextView.append("\n" + "Value: " + alert + "\n");
@@ -281,12 +308,12 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
-        } else  if (BATTERY_CHAR.equals(characteristic.getUuid())){
-            final int batterylevel= characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,1);
-            MainActivity.this.runOnUiThread(new Runnable() {
+        } else  if (DEVICE_NAME.equals(characteristic.getUuid())){
+            final String name= characteristic.getStringValue(1);
+            BluetoothController.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    devicesTextView.append("\n" + "Battery: " + batterylevel + "\n");
+                    devicesTextView.append("\n" + "Name: " + name + "\n");
                 }
             });
 
@@ -299,39 +326,36 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         mBluetoothGatt.readCharacteristic(characteristic);
-
     }
 
     public void setValueVibration(){
         BluetoothGattCharacteristic characteristic =
-                mBluetoothGatt.getService(BATTERY_SERVICE)
-                        .getCharacteristic(BATTERY_CHAR);
-        characteristic.setValue(75,BluetoothGattCharacteristic.FORMAT_UINT8,1);
+                mBluetoothGatt.getService(GENERIC_SERVICE)
+                        .getCharacteristic(DEVICE_NAME);
+        characteristic.setValue("Hello");
         mBluetoothGatt.writeCharacteristic(characteristic);
         broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-
-
     }
+
     public void startScan(final boolean enable){
         final BluetoothLeScanner btScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
         if (enable) {
-            devicesDiscovered.clear();
-            devicesTextView.setText("");
             deviceIndex=0;
 
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     btScanner.stopScan(leScanCallback);
-                    devicesTextView.append("Scanning stopped" + "\n");
+                    Log.d(TAG,"STOP SCAN");
                 }
 
             }, SCAN_PERIOD);
 
             btScanner.startScan(leScanCallback);
+            Log.d(TAG,"START SCAN");
         } else {
-            devicesTextView.append("Scanning stopped" + "\n");
+            //devicesTextView.append("Scanning stopped" + "\n");
             btScanner.stopScan(leScanCallback);
         }
     }
