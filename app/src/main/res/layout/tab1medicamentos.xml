@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.example.priscila.bluetoothtest.Home$PlaceholderFragment">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tab Medicamentos" />
+
+    <EditText
+        android:id="@+id/nombreMedicina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/section_label"
+        android:layout_below="@+id/section_label"
+        android:layout_marginTop="59dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Nombre Medicamento"/>
+
+    <Spinner
+        android:id="@+id/frecuencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/nombreMedicina"
+        android:layout_below="@+id/nombreMedicina"
+         />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_alignStart="@+id/nombreMedicina"
+        android:layout_below="@id/frecuencia"
+        android:timePickerMode="spinner" />
+
+    <Button
+        android:id="@+id/btnAgendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/timePicker"
+        android:layout_below="@+id/timePicker"
+        android:text="Agendar Medicamento" />
+
+</RelativeLayout>

@@ -10,26 +10,26 @@ public class Paciente {
 
     public static final String TABLE_PACIENTE = "Paciente";
     public static final String KEY_ID_PACIENTE = "id_paciente";
-    private static final String KEY_NOMBRE = "nombre";
-    private static final String KEY_FECHANACIMIENTO = "fechaNacimiento";
-    private static final String KEY_SEXO = "sexo";
-    private static final String KEY_DIRECCION = "direccion";
+    public static final String KEY_NOMBRE = "nombre";
+    public static final String KEY_FECHANACIMIENTO = "fechaNacimiento";
+    public static final String KEY_SEXO = "sexo";
+    public static final String KEY_DIRECCION = "direccion";
 
     public static final String CREATE_TABLE_PACIENTE = "CREATE TABLE " + TABLE_PACIENTE +
-            "(" + KEY_ID_PACIENTE + "TEXT PRIMARY KEY," + KEY_NOMBRE + "TEXT," + KEY_FECHANACIMIENTO +
-            "DATE," + KEY_SEXO + "CHAR," + KEY_DIRECCION + "TEXT" + ")";
+            "(" + KEY_ID_PACIENTE + " TEXT PRIMARY KEY," + KEY_NOMBRE + " TEXT," + KEY_FECHANACIMIENTO +
+            " DATE," + KEY_SEXO + " TEXT," + KEY_DIRECCION + " TEXT" + ")";
 
     String id_paciente;
     String nombre;
     Date fechaNacimiento;
-    char sexo;
+    String sexo;
     String direccion;
 
     public Paciente(){
 
     }
 
-    public Paciente(String id_paciente, String nombre, Date fechaNacimiento, char sexo, String direccion){
+    public Paciente(String id_paciente, String nombre, Date fechaNacimiento, String sexo, String direccion){
         this.id_paciente = id_paciente;
 
         this.nombre = nombre;
@@ -63,11 +63,11 @@ public class Paciente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 

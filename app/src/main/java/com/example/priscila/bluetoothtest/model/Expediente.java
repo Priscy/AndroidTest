@@ -18,24 +18,25 @@ public class Expediente {
 
     String id_expediente;
     String id_paciente;
-    String id_registroMedicinas;
+    String id_receta;
     String id_registroEventos;
     Date fecha;
 
     public static final String CREATE_TABLE_EXPEDIENTE = "CREATE TABLE " + TABLE_EXPEDIENTE +
-            "(" + KEY_ID_EXPEDIENTE + "TEXT PRIMARY KEY," + KEY_FECHA + "DATE," +
-            KEY_ID_PACIENTE + "TEXT," + " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + KEY_ID_PACIENTE + ")," +
-            KEY_ID_RECETA + "TEXT," + " FOREIGN KEY (" + KEY_ID_RECETA + ") REFERENCES " + Receta.TABLE_RECETA+ "(" + Receta.KEY_ID_RECETA + ")," +
-            KEY_ID_REGISTROEVENTOS + "TEXT," + " FOREIGN KEY (" + KEY_ID_REGISTROEVENTOS + ") REFERENCES " + DatabaseHelper.TABLE_REGISTROEVENTOS+ "(" + DatabaseHelper.KEY_ID_EVENTO+ ");";
+            "(" + KEY_ID_EXPEDIENTE + " TEXT PRIMARY KEY," + KEY_FECHA + " DATE," +
+            KEY_ID_PACIENTE + " TEXT," + KEY_ID_RECETA + " TEXT," + KEY_ID_REGISTROEVENTOS + " TEXT," +
+            " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ ")," +
+            " FOREIGN KEY (" + KEY_ID_RECETA + ") REFERENCES " + Receta.TABLE_RECETA+ "(" + Receta.KEY_ID_RECETA+ ")," +
+            " FOREIGN KEY (" + KEY_ID_REGISTROEVENTOS + ") REFERENCES " + DatabaseHelper.TABLE_REGISTROEVENTOS+ "(" + DatabaseHelper.KEY_ID_EVENTO+ "))";
 
     public Expediente(){
 
     }
 
-    public Expediente(String id_expediente, String id_paciente, String id_registroMedicinas, String id_registroEventos, Date fecha) {
+    public Expediente(String id_expediente, String id_paciente, String id_receta, String id_registroEventos, Date fecha) {
         this.id_expediente = id_expediente;
         this.id_paciente = id_paciente;
-        this.id_registroMedicinas = id_registroMedicinas;
+        this.id_receta = id_receta;
         this.id_registroEventos = id_registroEventos;
         this.fecha = fecha;
     }
@@ -56,12 +57,12 @@ public class Expediente {
         this.id_paciente = id_paciente;
     }
 
-    public String getId_registroMedicinas() {
-        return id_registroMedicinas;
+    public String getId_receta() {
+        return id_receta;
     }
 
-    public void setId_registroMedicinas(String id_registroMedicinas) {
-        this.id_registroMedicinas = id_registroMedicinas;
+    public void setId_receta(String id_receta) {
+        this.id_receta = id_receta;
     }
 
     public String getId_registroEventos() {

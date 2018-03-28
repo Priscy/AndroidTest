@@ -13,7 +13,7 @@ public class Medicina {
     String descripcion;
 
     public static final String CREATE_TABLE_MEDICINA = "CREATE TABLE " + TABLE_MEDICINA +
-            "(" + KEY_ID_MEDICINA + "TEXT PRIMARY KEY," + KEY_DESCRIPCION + "TEXT" + ")";
+            "(" + KEY_ID_MEDICINA + " TEXT PRIMARY KEY," + KEY_DESCRIPCION + " TEXT" + ")";
 
     public Medicina(){
 

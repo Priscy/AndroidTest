@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Debug;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -367,6 +366,13 @@ public class BluetoothController extends AppCompatActivity {
 
 
     }
+
+    public void next(View view){
+        Log.d(TAG,"Btn next clicked");
+        startActivity(new Intent(BluetoothController.this, pacienteSignup.class));
+
+    }
+
 
     public UUID convertFromInteger(int i) {
         final long MSB = 0x0000000000001000L;

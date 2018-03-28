@@ -13,8 +13,8 @@ public class Familiar {
     private static final String KEY_DIRECCION = "direccion";
 
     public static final String CREATE_TABLE_FAMILIAR = "CREATE TABLE " + TABLE_FAMILIAR +
-            "(" + KEY_ID_FAMILIAR + "TEXT PRIMARY KEY," + KEY_NOMBRE + "TEXT," + KEY_TELEFONO +
-            "TEXT," + KEY_SEXO + "CHAR," + KEY_DIRECCION + "TEXT" + ")";
+            "(" + KEY_ID_FAMILIAR + " TEXT PRIMARY KEY," + KEY_NOMBRE + " TEXT," + KEY_TELEFONO +
+            " TEXT," + KEY_SEXO + " CHAR," + KEY_DIRECCION + " TEXT" + ")";
 
 
     String id_familiar;

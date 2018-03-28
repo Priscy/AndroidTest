@@ -1,8 +1,11 @@
 package com.example.priscila.bluetoothtest.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.nfc.Tag;
+import android.util.Log;
 
 import com.example.priscila.bluetoothtest.model.Accidente;
 import com.example.priscila.bluetoothtest.model.Dispositivo;
@@ -14,13 +17,16 @@ import com.example.priscila.bluetoothtest.model.Paciente;
 import com.example.priscila.bluetoothtest.model.Receta;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Priscila on 11/03/2018.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String TAG = "---PRISCILA---";
 
+    SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
     private static final String LOG = "DatabaseHelper";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "PixkyDb";
@@ -58,25 +64,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //REGISTRO EVENTOS TABLE
     private static final String CREATE_TABLE_REGISTROEVENTOS = "CREATE TABLE " + TABLE_REGISTROEVENTOS +
-            "(" + KEY_ID_EVENTO + "TEXT PRIMARY KEY," + KEY_FECHAHORA + "DATETIME," + KEY_STATUS + "BOOLEAN," +
-            KEY_ID_ACCIDENTE + "TEXT," + " FOREIGN KEY (" + KEY_ID_ACCIDENTE + ") REFERENCES " + Accidente.TABLE_ACCIDENTE+ "(" + Accidente.KEY_ID_ACCIDENTE+ ")," +
-            KEY_ID_PACIENTE + "TEXT," + " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ ");";
+            "(" + KEY_ID_EVENTO + " TEXT PRIMARY KEY," + KEY_FECHAHORA + " DATETIME," + KEY_STATUS + " BOOLEAN," +
+            KEY_ID_ACCIDENTE + " TEXT," +  KEY_ID_PACIENTE + " TEXT," +
+            " FOREIGN KEY (" + KEY_ID_ACCIDENTE + ") REFERENCES " + Accidente.TABLE_ACCIDENTE+ "(" + Accidente.KEY_ID_ACCIDENTE+ ")," +
+            " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ "))";
 
     //DISPOSITIVO PACIENTE TABLE
     private static final  String CREATE_TABLE_DISPOSITIVOPACIENTE = "CREATE TABLE " + TABLE_DISPOSITIVO_PACIENTE +
-            "(" + KEY_ID_PACIENTE + "TEXT," + " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " +Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ ")," +
-            KEY_ID_DISPOSITIVO + "TEXT," + " FOREIGN KEY (" + KEY_ID_DISPOSITIVO + ") REFERENCES " + Dispositivo.TABLE_DISPOSITIVO+ "(" + Dispositivo.KEY_ID_DISPOSITIVO+ ");";
+            "(" + KEY_ID_PACIENTE + " TEXT," + KEY_ID_DISPOSITIVO + " TEXT," +
+            " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " +Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ ")," +
+            " FOREIGN KEY (" + KEY_ID_DISPOSITIVO + ") REFERENCES " + Dispositivo.TABLE_DISPOSITIVO+ "(" + Dispositivo.KEY_ID_DISPOSITIVO+ "))";
 
     //CONTACTO PACIENTE TABLE
     private static final String CREATE_TABLE_CONTACTOPACIENTE = "CREATE TABLE " + TABLE_CONTACTO_PACIENTE +
-           "(" +  KEY_ID_CONTACTOPACIENTE + "TEXT PRIMARY KET," + KEY_ID_CONTACTO + "TEXT," + KEY_TIPOCONTACTO + "TEXT," +
-            KEY_ID_PACIENTE + "TEXT," + " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + KEY_ID_PACIENTE + ");";
+           "(" + KEY_ID_CONTACTOPACIENTE + " TEXT PRIMARY KEY," + KEY_ID_CONTACTO + " TEXT," + KEY_TIPOCONTACTO + " TEXT," +
+            KEY_ID_PACIENTE + " TEXT," + " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ "))";
 
     //DETALLES RECETA TABLE
     private static final String CREATE_TABLE_DETALLESRECETA = "CREATE TABLE " + TABLE_DETALLESRECETA +
-            "(" + KEY_FRECUENCIA + "INTEGER," + KEY_HORAINICIO + "STRFTIME," +
-            KEY_ID_RECETA + "TEXT," + "FOREIGN KEY (" + KEY_ID_RECETA + ") REFERENCES " + Receta.TABLE_RECETA+ "(" + Receta.KEY_ID_RECETA+")," +
-            KEY_ID_MEDICINA + "TEXT," + " FOREIGN KEY (" + KEY_ID_MEDICINA + ") REFERENCES " + Medicina.TABLE_MEDICINA+ "(" + Medicina.KEY_ID_MEDICINA+ ");";
+            "(" + KEY_FRECUENCIA + " INTEGER," + KEY_HORAINICIO + " STRFTIME," +
+            KEY_ID_RECETA + " TEXT," + KEY_ID_MEDICINA + " TEXT," +
+            " FOREIGN KEY (" + KEY_ID_RECETA + ") REFERENCES " + Receta.TABLE_RECETA+ "(" + Receta.KEY_ID_RECETA+")," +
+            " FOREIGN KEY (" + KEY_ID_MEDICINA + ") REFERENCES " + Medicina.TABLE_MEDICINA+ "(" + Medicina.KEY_ID_MEDICINA+ "))";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -116,6 +125,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETALLESRECETA);
 
         onCreate(db);
+    }
+
+    public long createPaciente(String id_paciente, String nombre, String fechaNacimiento, String sexo, String dir){
+       // String fechaStr= dateformat.format(fechaNacimiento);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Paciente.KEY_ID_PACIENTE, id_paciente);
+        values.put(Paciente.KEY_NOMBRE, nombre);
+        values.put(Paciente.KEY_FECHANACIMIENTO, fechaNacimiento);
+        values.put(Paciente.KEY_SEXO, sexo);
+        values.put(Paciente.KEY_DIRECCION, dir);
+
+        long todo_id = db.insert(Paciente.TABLE_PACIENTE, null, values);
+        Log.d(TAG, "Paciente creado");
+        return todo_id;
+
     }
 
 }

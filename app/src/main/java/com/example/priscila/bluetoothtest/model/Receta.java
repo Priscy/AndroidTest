@@ -17,9 +17,10 @@ public class Receta {
     private static final String KEY_FECHA = "fecha";
 
     public static final String CREATE_TABLE_RECETA = "CREATE TABLE " + TABLE_RECETA +
-            "(" + KEY_ID_RECETA + "TEXT PRIMARY KEY" + KEY_FECHA + "DATE," +
-            KEY_ID_PACIENTE + "TEXT," + " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE + "(" + KEY_ID_PACIENTE + ")," +
-            KEY_ID_CONTACTOALTA + "TEXT," + "FOREIGN KEY (" + KEY_ID_CONTACTOALTA + ") REFERENCES " + DatabaseHelper.TABLE_CONTACTO_PACIENTE + "(" + DatabaseHelper.KEY_ID_CONTACTOPACIENTE + ");";
+            "(" + KEY_ID_RECETA + " TEXT PRIMARY KEY," + KEY_FECHA + " DATE," +
+            KEY_ID_PACIENTE + " TEXT," + KEY_ID_CONTACTOALTA + " TEXT," +
+            " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE + "(" + Paciente.KEY_ID_PACIENTE+ ")," +
+            " FOREIGN KEY (" + KEY_ID_CONTACTOALTA + ") REFERENCES " + DatabaseHelper.TABLE_CONTACTO_PACIENTE + "(" + DatabaseHelper.KEY_ID_CONTACTOPACIENTE + "))";
 
 
     String id_receta;
