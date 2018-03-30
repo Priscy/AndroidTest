@@ -245,7 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String lastId = "";
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String count = "SELECT count(*) FROM " + Paciente.TABLE_PACIENTE;;
+        String count = "SELECT count(*) FROM " + RegistroEventos.TABLE_REGISTROEVENTOS;
         Cursor mcursor = db.rawQuery(count, null);
         mcursor.moveToFirst();
         int icount = mcursor.getInt(0);

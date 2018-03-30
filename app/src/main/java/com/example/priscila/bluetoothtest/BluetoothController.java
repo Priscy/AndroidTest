@@ -255,7 +255,6 @@ public class BluetoothController extends AppCompatActivity {
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
         if (HEART_RATE_MEASUREMENT_CHAR_UUID.equals(characteristic.getUuid())) {
-
             int flag = characteristic.getProperties();
             int format = -1;
             if ((flag & 0x01) != 0) {
@@ -267,7 +266,6 @@ public class BluetoothController extends AppCompatActivity {
 
             final int alert = characteristic.getIntValue(format,1);
 
-
             BluetoothController.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -276,12 +274,12 @@ public class BluetoothController extends AppCompatActivity {
             });
 
             if (alert == 71) {
-
+                Constants.typeEvent="Caida";
                 startActivity(new Intent(BluetoothController.this, falls.class));
-
-            } else if (alert == 70){
-
-                setValueVibration();
+            } else if (alert == 72){
+                //setValueVibration();
+                Constants.typeEvent="Emergencia";
+                startActivity(new Intent(BluetoothController.this, Confirmation.class));
             } else {
 
                 // Log.d(TAG, String.format("Received heart rate: %d", heartRate));
@@ -292,7 +290,6 @@ public class BluetoothController extends AppCompatActivity {
                     }
                 });
             }
-
         } else  if (DEVICE_NAME.equals(characteristic.getUuid())){
             final String name= characteristic.getStringValue(1);
             BluetoothController.this.runOnUiThread(new Runnable() {
@@ -356,7 +353,7 @@ public class BluetoothController extends AppCompatActivity {
     public void next(View view){
         Log.d(TAG,"Btn next clicked");
         startActivity(new Intent(BluetoothController.this, pacienteSignup.class));
-        startActivity(new Intent(BluetoothController.this, falls.class));
+        //startActivity(new Intent(BluetoothController.this, falls.class));
 
 
     }
