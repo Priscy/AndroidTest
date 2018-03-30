@@ -14,4 +14,6 @@ public class Tab1Medicamentos extends Fragment {
         return rootView;
     }
 
+
+
 }

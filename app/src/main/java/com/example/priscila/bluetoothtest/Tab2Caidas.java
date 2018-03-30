@@ -6,13 +6,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
+import com.example.priscila.bluetoothtest.model.Accidente;
+import com.example.priscila.bluetoothtest.model.RegistroEventos;
+
+import java.util.List;
+
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.database.sqlite.SQLiteDatabase;
+
+
 
 
 public class Tab2Caidas extends Fragment {
+    DatabaseHelper dbHelper;
+    TextView listaAccidentes;
+    SQLiteDatabase db;
+    String eventoStr;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        dbHelper = new DatabaseHelper(getActivity());
         View rootView = inflater.inflate(R.layout.tab2caidas, container, false);
+        listaAccidentes= (TextView)rootView.findViewById(R.id.listaAcc);  //UPDATE
+        showCaidas();
         return rootView;
+    }
+
+    public void showCaidas(){
+        List<RegistroEventos> eventos= dbHelper.getEventos();
+        for(RegistroEventos evento: eventos){
+            eventoStr = new StringBuilder("Caida").append(" de ").append(evento.getId_paciente()).append(" a las ").append(evento.getFechaHora()).toString();
+            listaAccidentes.append(eventoStr);
+        }
     }
 }

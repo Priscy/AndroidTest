@@ -7,13 +7,13 @@ package com.example.priscila.bluetoothtest.model;
 public class Accidente {
     public static final String TABLE_ACCIDENTE = "Accidente";
     public static final String KEY_ID_ACCIDENTE = "id_accidente";
-    private static final String KEY_DESCRIPCION = "descripcion";
+    public static final String KEY_DESCRIPCION = "descripcion";
 
     String id_accidente;
     String descripcion;
 
     public static final String CREATE_TABLE_ACCIDENTE = "CREATE TABLE " + TABLE_ACCIDENTE +
-            "(" + KEY_ID_ACCIDENTE + "TEXT PRIMARY KEY," + KEY_DESCRIPCION + "TEXT" + ")";
+            "(" + KEY_ID_ACCIDENTE + " TEXT PRIMARY KEY," + KEY_DESCRIPCION + " TEXT" + ")";
 
     public Accidente(){
 

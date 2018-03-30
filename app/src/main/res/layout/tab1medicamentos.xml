@@ -32,8 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/nombreMedicina"
-        android:layout_below="@+id/nombreMedicina"
-         />
+        android:layout_below="@+id/nombreMedicina" />
 
     <TimePicker
         android:id="@+id/timePicker"

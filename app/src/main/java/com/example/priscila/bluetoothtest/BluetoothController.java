@@ -58,17 +58,10 @@ public class BluetoothController extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     private static final int ALERT_HIGH = 2;
 
-    public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
     public final UUID HEART_RATE_SERVICE_UUID = convertFromInteger(0x180D);
     public final UUID  HEART_RATE_MEASUREMENT_CHAR_UUID = convertFromInteger(0x2A37);
     public final UUID  HEART_RATE_CONTROL_POINT_CHAR_UUID = convertFromInteger(0x2A39);
     public final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = convertFromInteger(0x2902);
-    public final UUID ALERT_NOTIFICATION_SERVICE = convertFromInteger(0x1811);
-    public final UUID NEW_ALERT_CHAR = convertFromInteger(0x2A46);
-    public final UUID ALERT_NOTIFICATION_CONTROLPNT = convertFromInteger(0x2A44);
-    public final UUID CATEGORY_ID_CHAR=convertFromInteger(0x2A43);
-    public final UUID BATTERY_SERVICE=convertFromInteger(0x180f);
-    public final UUID BATTERY_CHAR=convertFromInteger(0x2A19);
     public final UUID GENERIC_SERVICE = convertFromInteger(0x1800);
     public final UUID DEVICE_NAME= convertFromInteger(0X2A00);
 
@@ -133,7 +126,6 @@ public class BluetoothController extends AppCompatActivity {
             });
             builder.show();
         }
-       //startScan(true);
     }
 
 
@@ -152,7 +144,6 @@ public class BluetoothController extends AppCompatActivity {
         public void onScanResult(int callbackType, ScanResult result) {
             Log.d(TAG,"INSIDE ON SCAN RESULT");
 
-           // Log.d(TAG,result.getDevice());
             Log.i(TAG,result.toString());
             //result.getDevice().getName() != null && result.getDevice().getName().startsWith("Pixky")==true && devicesDiscovered.contains(result.getDevice()) == false
 
@@ -161,16 +152,10 @@ public class BluetoothController extends AppCompatActivity {
                 devicesTextView.append("Index: " + deviceIndex + " Device Name: " + result.getDevice().getName() + " rssi: " + result.getRssi() + "\n");
                 devicesDiscovered.add(result.getDevice());
                 deviceIndex++;
-                //auto scroll for text view
-               //final int scrollAmount = devicesTextView.getLayout().getLineTop(devicesTextView.getLineCount()) - devicesTextView.getHeight();
-               //if there is no need to scroll, scrollAmount will be <=0
-              //  if (scrollAmount > 0) {
-               //     devicesTextView.scrollTo(0, scrollAmount);
-              //  }
             }
         }
         public void onScanFailed(int errorCode) {
-           stateTextView.append("Scan failed"  + "\n");
+           Log.d(TAG, "SCAN FAILED");
         }
     };
 
@@ -214,7 +199,7 @@ public class BluetoothController extends AppCompatActivity {
                     BluetoothController.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            devicesTextView.append( "\n" +"Servicio: " + serviceUUID +  "\n");
+                          //  devicesTextView.append( "\n" +"Servicio: " + serviceUUID +  "\n");
                         }
                     });
 
@@ -291,6 +276,7 @@ public class BluetoothController extends AppCompatActivity {
             });
 
             if (alert == 71) {
+
                 startActivity(new Intent(BluetoothController.this, falls.class));
 
             } else if (alert == 70){
@@ -370,6 +356,8 @@ public class BluetoothController extends AppCompatActivity {
     public void next(View view){
         Log.d(TAG,"Btn next clicked");
         startActivity(new Intent(BluetoothController.this, pacienteSignup.class));
+        startActivity(new Intent(BluetoothController.this, falls.class));
+
 
     }
 

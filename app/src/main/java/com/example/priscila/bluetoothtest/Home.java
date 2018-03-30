@@ -16,6 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
+import com.example.priscila.bluetoothtest.model.Accidente;
+
+import java.util.List;
+
 
 public class Home extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setTitle(pacienteSignup.nombreStr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +62,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
+
     }
 
 
@@ -68,6 +75,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -124,7 +132,9 @@ public class Home extends AppCompatActivity {
                 case 2:
                     return "EMERGENCIAS";
             }
+
             return null;
         }
+
     }
 }

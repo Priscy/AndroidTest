@@ -27,7 +27,7 @@ public class Expediente {
             KEY_ID_PACIENTE + " TEXT," + KEY_ID_RECETA + " TEXT," + KEY_ID_REGISTROEVENTOS + " TEXT," +
             " FOREIGN KEY (" + KEY_ID_PACIENTE + ") REFERENCES " + Paciente.TABLE_PACIENTE+ "(" + Paciente.KEY_ID_PACIENTE+ ")," +
             " FOREIGN KEY (" + KEY_ID_RECETA + ") REFERENCES " + Receta.TABLE_RECETA+ "(" + Receta.KEY_ID_RECETA+ ")," +
-            " FOREIGN KEY (" + KEY_ID_REGISTROEVENTOS + ") REFERENCES " + DatabaseHelper.TABLE_REGISTROEVENTOS+ "(" + DatabaseHelper.KEY_ID_EVENTO+ "))";
+            " FOREIGN KEY (" + KEY_ID_REGISTROEVENTOS + ") REFERENCES " + RegistroEventos.TABLE_REGISTROEVENTOS+ "(" + RegistroEventos.KEY_ID_EVENTO+ "))";
 
     public Expediente(){
 

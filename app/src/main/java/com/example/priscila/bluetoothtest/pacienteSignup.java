@@ -1,7 +1,6 @@
 package com.example.priscila.bluetoothtest;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +8,9 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Button;
 
 import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,15 +25,16 @@ public class pacienteSignup extends AppCompatActivity {
     RadioButton mujer;
     EditText dir;
 
-    public static String nombreStr;
+
     String dayStr;
     String monthStr;
     String yearStr;
     String dateStr;
     Date date;
     String sexo;
-    int idCont;
-    String idPat = "Paciente";
+    int contPat;
+    public static String nombreStr;
+    public static String idPat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,6 @@ public class pacienteSignup extends AppCompatActivity {
         hombre=(RadioButton)findViewById(R.id.hombre);
         mujer=(RadioButton)findViewById(R.id.mujer);
         dir=(EditText)findViewById(R.id.dir);
-        idCont=0;
 
 
     }
@@ -59,14 +56,7 @@ public class pacienteSignup extends AppCompatActivity {
         monthStr= Integer.toString(fechaNac.getMonth() + 1);
         yearStr = Integer.toString(fechaNac.getYear());
         dateStr = new StringBuilder(yearStr).append("-").append(monthStr).append("-").append(dayStr).toString();
-//        try {
-//
-//            date = dtfm.parse(dateStr);
-//            Log.d(TAG,"Date parsed correctly");
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
+
         if(hombre.isActivated()){
             sexo="H";
         }else {
@@ -87,8 +77,16 @@ public class pacienteSignup extends AppCompatActivity {
     }
 
     public void generateIdPaciente(){
+        String lastidPat = dbHelper.getLastPaciente();
+        if(lastidPat == "null"){
+            contPat = -1;
+        } else {
+            contPat = Integer.parseInt(lastidPat);
+        }
+        contPat ++;
+
         idPat="Paciente";
-        idPat = new StringBuilder(idPat).append("_").append(Integer.toString(idCont)).toString();
-        idCont++;
+        idPat = new StringBuilder(idPat).append("_").append(Integer.toString(contPat)).toString();
+
     }
 }

@@ -11,11 +11,16 @@ import android.animation.ObjectAnimator;
 import android.widget.ProgressBar;
 import android.os.Handler;
 
+import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
+
 public class falls extends AppCompatActivity {
+    DatabaseHelper dbHelper = new DatabaseHelper(this);
 
     TextView receive;
     ProgressBar pb;
     ObjectAnimator objectAnimator;
+    String idEvento;
+    int contEvento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,27 @@ public class falls extends AppCompatActivity {
                 startActivity(new Intent(falls.this, Confirmation.class));
             }
         }, 10000);
+        registrarCaida();
+
+    }
+
+    public void registrarCaida(){
+        generateIdEvento();
+        dbHelper.createRegistroEventos(idEvento, "Accidente_01", pacienteSignup.idPat, 0);
+
+    }
+
+    public void generateIdEvento(){
+        String lastidEvento = dbHelper.getLastEvent();
+        if(lastidEvento == "null"){
+            contEvento = -1;
+        } else {
+            contEvento = Integer.parseInt(lastidEvento);
+        }
+        contEvento ++;
+
+        idEvento = "Evento";
+        idEvento = new StringBuilder(idEvento).append("_").append(Integer.toString(contEvento)).toString();
 
     }
 
