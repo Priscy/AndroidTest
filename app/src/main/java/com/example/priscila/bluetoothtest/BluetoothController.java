@@ -64,6 +64,9 @@ public class BluetoothController extends AppCompatActivity {
     public final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = convertFromInteger(0x2902);
     public final UUID GENERIC_SERVICE = convertFromInteger(0x1800);
     public final UUID DEVICE_NAME= convertFromInteger(0X2A00);
+    public final UUID CUSTOM_SERVICE = convertFromInteger(0x0001);
+    public final UUID CUSTOM_CHAR_WRITE = convertFromInteger(0x0002);
+    public final UUID CUSTOM_CHAR_READ = convertFromInteger(0x0003);
 
     public final static String ACTION_DATA_AVAILABLE =
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
@@ -147,7 +150,7 @@ public class BluetoothController extends AppCompatActivity {
             Log.i(TAG,result.toString());
             //result.getDevice().getName() != null && result.getDevice().getName().startsWith("Pixky")==true && devicesDiscovered.contains(result.getDevice()) == false
 
-            if (devicesDiscovered.contains(result.getDevice()) == false) {
+            if (result.getDevice().getName() != null && result.getDevice().getName().startsWith("Pixky")==true && devicesDiscovered.contains(result.getDevice()) == false) {
                 changeLayout();
                 devicesTextView.append("Index: " + deviceIndex + " Device Name: " + result.getDevice().getName() + " rssi: " + result.getRssi() + "\n");
                 devicesDiscovered.add(result.getDevice());
@@ -279,7 +282,7 @@ public class BluetoothController extends AppCompatActivity {
             } else if (alert == 72){
                 //setValueVibration();
                 Constants.typeEvent="Emergencia";
-                startActivity(new Intent(BluetoothController.this, Confirmation.class));
+                startActivity(new Intent(BluetoothController.this, falls.class));
             } else {
 
                 // Log.d(TAG, String.format("Received heart rate: %d", heartRate));
@@ -290,12 +293,12 @@ public class BluetoothController extends AppCompatActivity {
                     }
                 });
             }
-        } else  if (DEVICE_NAME.equals(characteristic.getUuid())){
+        } else  if (CUSTOM_CHAR_READ.equals(characteristic.getUuid())){
             final String name= characteristic.getStringValue(1);
             BluetoothController.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    devicesTextView.append("\n" + "Name: " + name + "\n");
+                    devicesTextView.append("\n" + "CHAR READ: " + name + "\n");
                 }
             });
 
@@ -312,9 +315,9 @@ public class BluetoothController extends AppCompatActivity {
 
     public void setValueVibration(){
         BluetoothGattCharacteristic characteristic =
-                mBluetoothGatt.getService(GENERIC_SERVICE)
-                        .getCharacteristic(DEVICE_NAME);
-        characteristic.setValue("Hello");
+                mBluetoothGatt.getService(CUSTOM_SERVICE)
+                        .getCharacteristic(CUSTOM_CHAR_READ);
+        characteristic.setValue("HELLO");
         mBluetoothGatt.writeCharacteristic(characteristic);
         broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
     }

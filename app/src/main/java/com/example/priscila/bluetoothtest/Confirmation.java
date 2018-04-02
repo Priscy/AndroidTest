@@ -18,13 +18,6 @@ public class Confirmation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
 
-        tipoAccidente = (TextView)findViewById(R.id.tipodeAccidente);
-        if(Constants.typeEvent=="Caida"){
-            tipoAccidente.setText("Caída");
-        } else if (Constants.typeEvent=="Emergencia"){
-            tipoAccidente.setText("Emergencia");
-        }
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -33,5 +26,7 @@ public class Confirmation extends AppCompatActivity {
         }, 2000);
 
     }
+
+
 
 }

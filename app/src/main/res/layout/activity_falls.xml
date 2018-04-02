@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Caída detectada"
+        android:text=""
         android:id="@+id/tv1"
         android:gravity="center"
         android:textSize="32sp"

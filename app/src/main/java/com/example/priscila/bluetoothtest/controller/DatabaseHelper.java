@@ -217,9 +217,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return registro_id;
     }
 
-    public List<RegistroEventos> getEventos(){
-        List<RegistroEventos> eventos = new ArrayList<RegistroEventos>();
-        String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS;
+    public List<RegistroEventos> getCaidas(){
+        List<RegistroEventos> caidas = new ArrayList<RegistroEventos>();
+        String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_01'";
 
         Log.e(LOG, selectQuery);
 
@@ -235,10 +235,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 event.setId_paciente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_PACIENTE)));
                 event.setFechaHora(c.getString(c.getColumnIndex(RegistroEventos.KEY_FECHAHORA)));
                 event.setStatus(c.getInt(c.getColumnIndex(RegistroEventos.KEY_STATUS)));
-                eventos.add(event);
+                caidas.add(event);
             } while (c.moveToNext());
         }
-        return eventos;
+        return caidas;
+    }
+
+    public List<RegistroEventos> getEmergencias(){
+        List<RegistroEventos> emergencias = new ArrayList<RegistroEventos>();
+        String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_02'";
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                RegistroEventos event = new RegistroEventos();
+                event.setId_evento(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_EVENTO)));
+                event.setId_accidente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_ACCIDENTE)));
+                event.setId_paciente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_PACIENTE)));
+                event.setFechaHora(c.getString(c.getColumnIndex(RegistroEventos.KEY_FECHAHORA)));
+                event.setStatus(c.getInt(c.getColumnIndex(RegistroEventos.KEY_STATUS)));
+                emergencias.add(event);
+            } while (c.moveToNext());
+        }
+        return emergencias;
     }
 
     public String getLastEvent(){

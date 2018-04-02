@@ -26,8 +26,10 @@ public class Tab2Caidas extends Fragment {
                              Bundle savedInstanceState) {
         dbHelper = new DatabaseHelper(getActivity());
         View rootView = inflater.inflate(R.layout.tab2caidas, container, false);
-        listaAccidentes= (TextView)rootView.findViewById(R.id.listaAcc);  //UPDATE
-        showCaidas();
+        listaAccidentes= (TextView)rootView.findViewById(R.id.listaAcc);
+        if (Constants.caidasRegistradas != 0) {
+            showCaidas();
+        }
         return rootView;
     }
 
@@ -35,14 +37,16 @@ public class Tab2Caidas extends Fragment {
     public void onResume(){
         super.onResume();
         listaAccidentes.setText("");
-        showCaidas();
+        if (Constants.caidasRegistradas != 0) {
+            showCaidas();
+        }
 
     }
 
     public void showCaidas(){
-        List<RegistroEventos> eventos= dbHelper.getEventos();
+        List<RegistroEventos> eventos= dbHelper.getCaidas();
         for(RegistroEventos evento: eventos){
-            eventoStr = new StringBuilder("Caida").append(" de ").append(evento.getId_paciente()).append(" a las ").append(evento.getFechaHora()).append("\n").toString();
+            eventoStr = new StringBuilder("Caida").append(" de ").append(evento.getId_paciente()).append(" a las ").append(evento.getFechaHora()).append(evento.getId_accidente()).append("\n").toString();
             listaAccidentes.append(eventoStr);
         }
     }
