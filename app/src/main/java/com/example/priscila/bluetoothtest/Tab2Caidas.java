@@ -27,9 +27,7 @@ public class Tab2Caidas extends Fragment {
         dbHelper = new DatabaseHelper(getActivity());
         View rootView = inflater.inflate(R.layout.tab2caidas, container, false);
         listaAccidentes= (TextView)rootView.findViewById(R.id.listaAcc);
-        if (Constants.caidasRegistradas != 0) {
-            showCaidas();
-        }
+        showCaidas();
         return rootView;
     }
 
@@ -37,9 +35,7 @@ public class Tab2Caidas extends Fragment {
     public void onResume(){
         super.onResume();
         listaAccidentes.setText("");
-        if (Constants.caidasRegistradas != 0) {
-            showCaidas();
-        }
+        showCaidas();
 
     }
 

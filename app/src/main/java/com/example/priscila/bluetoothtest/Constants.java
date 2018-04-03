@@ -6,6 +6,5 @@ package com.example.priscila.bluetoothtest;
 
 public final class Constants {
     public static String typeEvent ="";
-    public static int caidasRegistradas = 0;
-    public static int emerRegistradas =0;
+    public static final String TAG = "---PRISCILA---";
 }

@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "873474184073",
-    "firebase_url": "https://hygiea-3fe81.firebaseio.com",
-    "project_id": "hygiea-3fe81",
-    "storage_bucket": "hygiea-3fe81.appspot.com"
+    "project_number": "256288544890",
+    "firebase_url": "https://pixkyhealth.firebaseio.com",
+    "project_id": "pixkyhealth",
+    "storage_bucket": "pixkyhealth.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:873474184073:android:1eadf4063562df3b",
+        "mobilesdk_app_id": "1:256288544890:android:1eadf4063562df3b",
         "android_client_info": {
           "package_name": "com.example.priscila.bluetoothtest"
         }
       },
       "oauth_client": [
         {
-          "client_id": "873474184073-3fmh6ggg7pv6e54vfdqqa76s707cuupo.apps.googleusercontent.com",
+          "client_id": "256288544890-upr6le2rgmac3o74g89iv9g9abdt0f33.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD8YgD5RO2O8c1k_618XADh1_5kahMZT-g"
+          "current_key": "AIzaSyCOtTdYoWsEdxea6qRe_nLY7G9vDi7dlS8"
         }
       ],
       "services": {

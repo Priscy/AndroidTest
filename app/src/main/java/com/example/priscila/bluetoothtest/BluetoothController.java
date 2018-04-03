@@ -37,8 +37,6 @@ import java.util.UUID;
 
 
 public class BluetoothController extends AppCompatActivity {
-    private static final String TAG = "---PRISCILA---";
-
     private final static int REQUEST_ENABLE_BT = 1;
 
     BluetoothAdapter mBluetoothAdapter;
@@ -145,12 +143,12 @@ public class BluetoothController extends AppCompatActivity {
     private ScanCallback leScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
-            Log.d(TAG,"INSIDE ON SCAN RESULT");
+            Log.d(Constants.TAG,"INSIDE ON SCAN RESULT");
 
-            Log.i(TAG,result.toString());
+            Log.i(Constants.TAG,result.toString());
             //result.getDevice().getName() != null && result.getDevice().getName().startsWith("Pixky")==true && devicesDiscovered.contains(result.getDevice()) == false
 
-            if (result.getDevice().getName() != null && result.getDevice().getName().startsWith("Pixky")==true && devicesDiscovered.contains(result.getDevice()) == false) {
+            if (devicesDiscovered.contains(result.getDevice()) == false) {
                 changeLayout();
                 devicesTextView.append("Index: " + deviceIndex + " Device Name: " + result.getDevice().getName() + " rssi: " + result.getRssi() + "\n");
                 devicesDiscovered.add(result.getDevice());
@@ -158,13 +156,13 @@ public class BluetoothController extends AppCompatActivity {
             }
         }
         public void onScanFailed(int errorCode) {
-           Log.d(TAG, "SCAN FAILED");
+           Log.d(Constants.TAG, "SCAN FAILED");
         }
     };
 
 
     public void changeLayout() {
-        Log.d(TAG,"INSIDE CHANGIND LAYOUT");
+        Log.d(Constants.TAG,"INSIDE CHANGIND LAYOUT");
         layoutBluetooth.setVisibility(LinearLayout.VISIBLE);
         layoutSplash.setVisibility(LinearLayout.GONE);
     }
@@ -216,8 +214,6 @@ public class BluetoothController extends AppCompatActivity {
                     descriptor.setValue(
                             BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                     gatt.writeDescriptor(descriptor);
-
-
 
                 }
             } else {
@@ -284,8 +280,6 @@ public class BluetoothController extends AppCompatActivity {
                 Constants.typeEvent="Emergencia";
                 startActivity(new Intent(BluetoothController.this, falls.class));
             } else {
-
-                // Log.d(TAG, String.format("Received heart rate: %d", heartRate));
                 BluetoothController.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -332,13 +326,13 @@ public class BluetoothController extends AppCompatActivity {
                 @Override
                 public void run() {
                     btScanner.stopScan(leScanCallback);
-                    Log.d(TAG,"STOP SCAN");
+                    Log.d(Constants.TAG,"STOP SCAN");
                 }
 
             }, SCAN_PERIOD);
 
             btScanner.startScan(leScanCallback);
-            Log.d(TAG,"START SCAN");
+            Log.d(Constants.TAG,"START SCAN");
         } else {
             //devicesTextView.append("Scanning stopped" + "\n");
             btScanner.stopScan(leScanCallback);
@@ -354,7 +348,7 @@ public class BluetoothController extends AppCompatActivity {
     }
 
     public void next(View view){
-        Log.d(TAG,"Btn next clicked");
+        Log.d(Constants.TAG,"Btn next clicked");
         startActivity(new Intent(BluetoothController.this, pacienteSignup.class));
         //startActivity(new Intent(BluetoothController.this, falls.class));
 

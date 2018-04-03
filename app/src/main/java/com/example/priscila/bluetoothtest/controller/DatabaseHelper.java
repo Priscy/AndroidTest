@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.nfc.Tag;
 import android.util.Log;
 
+import com.example.priscila.bluetoothtest.Constants;
 import com.example.priscila.bluetoothtest.model.Accidente;
 import com.example.priscila.bluetoothtest.model.Dispositivo;
 import com.example.priscila.bluetoothtest.model.Expediente;
@@ -29,7 +30,6 @@ import java.util.Locale;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String TAG = "---PRISCILA---";
     private SQLiteDatabase mDefaultWritableDatabase = null;
     private SQLiteDatabase mDefaultReadableDatabase= null;
 
@@ -139,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Paciente.KEY_DIRECCION, dir);
 
         long paciente_id = db.insert(Paciente.TABLE_PACIENTE, null, values);
-        Log.d(TAG, "Paciente creado");
+        Log.d(Constants.TAG, "Paciente creado");
         return paciente_id;
 
     }
@@ -159,9 +159,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToLast()){
                 lastId = cursor.getString(cursor.getColumnIndex(Paciente.KEY_ID_PACIENTE));
             }
-            Log.d(TAG, lastId);
+            Log.d(Constants.TAG, lastId);
             lastId = lastId.substring(9);
-            Log.d(TAG, lastId);
+            Log.d(Constants.TAG, lastId);
         }
 
         else{
@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Accidente.KEY_DESCRIPCION, descripcion);
 
         long accidente_id = db.insert(Accidente.TABLE_ACCIDENTE, null, values);
-        Log.d(TAG, "Accidente: " + descripcion + "registrado");
+        Log.d(Constants.TAG, "Accidente: " + descripcion + "registrado");
         return accidente_id;
 
     }
@@ -219,48 +219,61 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<RegistroEventos> getCaidas(){
         List<RegistroEventos> caidas = new ArrayList<RegistroEventos>();
-        String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_01'";
-
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
-        if (c.moveToFirst()) {
-            do {
-              RegistroEventos event = new RegistroEventos();
-                event.setId_evento(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_EVENTO)));
-                event.setId_accidente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_ACCIDENTE)));
-                event.setId_paciente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_PACIENTE)));
-                event.setFechaHora(c.getString(c.getColumnIndex(RegistroEventos.KEY_FECHAHORA)));
-                event.setStatus(c.getInt(c.getColumnIndex(RegistroEventos.KEY_STATUS)));
-                caidas.add(event);
-            } while (c.moveToNext());
+        String count = "SELECT count(*) FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_01'";
+        Cursor mcursor = db.rawQuery(count, null);
+        mcursor.moveToFirst();
+        int icount = mcursor.getInt(0);
+        if(icount>0) {
+            String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_01'";
+
+            Log.e(LOG, selectQuery);
+            Cursor c = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (c.moveToFirst()) {
+                do {
+                    RegistroEventos event = new RegistroEventos();
+                    event.setId_evento(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_EVENTO)));
+                    event.setId_accidente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_ACCIDENTE)));
+                    event.setId_paciente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_PACIENTE)));
+                    event.setFechaHora(c.getString(c.getColumnIndex(RegistroEventos.KEY_FECHAHORA)));
+                    event.setStatus(c.getInt(c.getColumnIndex(RegistroEventos.KEY_STATUS)));
+                    caidas.add(event);
+                } while (c.moveToNext());
+            }
         }
         return caidas;
     }
 
     public List<RegistroEventos> getEmergencias(){
         List<RegistroEventos> emergencias = new ArrayList<RegistroEventos>();
-        String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_02'";
-
-        Log.e(LOG, selectQuery);
-
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
-        if (c.moveToFirst()) {
-            do {
-                RegistroEventos event = new RegistroEventos();
-                event.setId_evento(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_EVENTO)));
-                event.setId_accidente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_ACCIDENTE)));
-                event.setId_paciente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_PACIENTE)));
-                event.setFechaHora(c.getString(c.getColumnIndex(RegistroEventos.KEY_FECHAHORA)));
-                event.setStatus(c.getInt(c.getColumnIndex(RegistroEventos.KEY_STATUS)));
-                emergencias.add(event);
-            } while (c.moveToNext());
+        String count = "SELECT count(*) FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_02'";
+        Cursor mcursor = db.rawQuery(count, null);
+        mcursor.moveToFirst();
+        int icount = mcursor.getInt(0);
+        if(icount>0) {
+            String selectQuery = "SELECT  * FROM " + RegistroEventos.TABLE_REGISTROEVENTOS + " WHERE " + RegistroEventos.KEY_ID_ACCIDENTE + " = 'Accidente_02'";
+            Log.e(LOG, selectQuery);
+
+            Cursor c = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (c.moveToFirst()) {
+                do {
+                    RegistroEventos event = new RegistroEventos();
+                    event.setId_evento(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_EVENTO)));
+                    event.setId_accidente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_ACCIDENTE)));
+                    event.setId_paciente(c.getString(c.getColumnIndex(RegistroEventos.KEY_ID_PACIENTE)));
+                    event.setFechaHora(c.getString(c.getColumnIndex(RegistroEventos.KEY_FECHAHORA)));
+                    event.setStatus(c.getInt(c.getColumnIndex(RegistroEventos.KEY_STATUS)));
+                    emergencias.add(event);
+                } while (c.moveToNext());
+            }
+
         }
         return emergencias;
     }
@@ -281,9 +294,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToLast()){
                 lastId = cursor.getString(cursor.getColumnIndex(RegistroEventos.KEY_ID_EVENTO));
             }
-            Log.d(TAG, lastId);
+            Log.d(Constants.TAG, lastId);
             lastId = lastId.substring(7);
-            Log.d(TAG, lastId);
+            Log.d(Constants.TAG, lastId);
         } else {
             lastId = "null";
         }

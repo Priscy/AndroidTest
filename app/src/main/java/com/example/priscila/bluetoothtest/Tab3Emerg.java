@@ -15,7 +15,6 @@ import java.util.List;
 
 
 public class Tab3Emerg extends Fragment {
-    private static final String TAG = "---PRISCILA---";
     DatabaseHelper dbHelper;
     TextView listaAccidentes;
     String eventoStr;
@@ -26,10 +25,7 @@ public class Tab3Emerg extends Fragment {
         dbHelper = new DatabaseHelper(getActivity());
         View rootView = inflater.inflate(R.layout.tab3emerg, container, false);
         listaAccidentes= (TextView)rootView.findViewById(R.id.listaEmer);
-        Log.d(TAG, "Emergencias: " +Constants.emerRegistradas);
-        if(Constants.emerRegistradas != 0){
-            showEmergencias();
-        }
+        showEmergencias();
         return rootView;
     }
 
@@ -37,9 +33,7 @@ public class Tab3Emerg extends Fragment {
     public void onResume(){
         super.onResume();
         listaAccidentes.setText("");
-        if (Constants.emerRegistradas != 0) {
-            showEmergencias();
-        }
+        showEmergencias();
 
     }
 

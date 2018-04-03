@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class pacienteSignup extends AppCompatActivity {
-    private static final String TAG = "---PRISCILA---";
     SimpleDateFormat dtfm = new SimpleDateFormat("dd-MM-yyyy");
 
     DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -65,15 +64,16 @@ public class pacienteSignup extends AppCompatActivity {
 
        nombreStr = nombre.getText().toString();
         String dirStr = dir.getText().toString();
-        Log.d(TAG,idPat);
-        Log.d(TAG,nombreStr);
-        Log.d(TAG,dateStr);
-        Log.d(TAG,sexo);
-        Log.d(TAG,dirStr);
+        Log.d(Constants.TAG,idPat);
+        Log.d(Constants.TAG,nombreStr);
+        Log.d(Constants.TAG,dateStr);
+        Log.d(Constants.TAG,sexo);
+        Log.d(Constants.TAG,dirStr);
 
         dbHelper.createPaciente(idPat, nombreStr,dateStr,sexo,dirStr);
-
-        startActivity(new Intent(pacienteSignup.this, Home.class));
+        Constants.typeEvent="Emergencia";
+        startActivity(new Intent(pacienteSignup.this, falls.class));
+        //startActivity(new Intent(pacienteSignup.this, Home.class));
     }
 
     public void generateIdPaciente(){

@@ -56,8 +56,6 @@ public class falls extends AppCompatActivity {
     public void registrarCaida(){
         generateIdEvento();
         dbHelper.createRegistroEventos(idEvento, "Accidente_01", pacienteSignup.idPat, 0);
-        Constants.caidasRegistradas +=1;
-
     }
 
     public void generateIdEvento(){
@@ -77,7 +75,6 @@ public class falls extends AppCompatActivity {
     public void registrarEmergencia(){
         generateIdEvento();
         dbHelper.createRegistroEventos(idEvento, "Accidente_02", pacienteSignup.idPat, 0);
-        Constants.emerRegistradas +=1;
 
     }
 
