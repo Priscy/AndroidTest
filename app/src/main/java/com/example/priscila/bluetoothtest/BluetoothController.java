@@ -63,8 +63,8 @@ public class BluetoothController extends AppCompatActivity {
     public final UUID GENERIC_SERVICE = convertFromInteger(0x1800);
     public final UUID DEVICE_NAME= convertFromInteger(0X2A00);
     public final UUID CUSTOM_SERVICE = convertFromInteger(0x0001);
-    public final UUID CUSTOM_CHAR_WRITE = convertFromInteger(0x0002);
-    public final UUID CUSTOM_CHAR_READ = convertFromInteger(0x0003);
+    public final UUID CUSTOM_CHAR_READ = convertFromInteger(0x0002);
+    public final UUID CUSTOM_CHAR_WRITE = convertFromInteger(0x0003);
 
     public final static String ACTION_DATA_AVAILABLE =
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
@@ -288,11 +288,11 @@ public class BluetoothController extends AppCompatActivity {
                 });
             }
         } else  if (CUSTOM_CHAR_READ.equals(characteristic.getUuid())){
-            final String name= characteristic.getStringValue(1);
+            final int value= characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,1);
             BluetoothController.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    devicesTextView.append("\n" + "CHAR READ: " + name + "\n");
+                    devicesTextView.append("\n" + "CHAR READ: " + value + "\n");
                 }
             });
 
@@ -310,8 +310,8 @@ public class BluetoothController extends AppCompatActivity {
     public void setValueVibration(){
         BluetoothGattCharacteristic characteristic =
                 mBluetoothGatt.getService(CUSTOM_SERVICE)
-                        .getCharacteristic(CUSTOM_CHAR_READ);
-        characteristic.setValue("HELLO");
+                        .getCharacteristic(CUSTOM_CHAR_WRITE);
+        characteristic.setValue(10,BluetoothGattCharacteristic.FORMAT_UINT8, 0);
         mBluetoothGatt.writeCharacteristic(characteristic);
         broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
     }

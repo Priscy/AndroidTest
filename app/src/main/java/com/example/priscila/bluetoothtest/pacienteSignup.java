@@ -72,8 +72,7 @@ public class pacienteSignup extends AppCompatActivity {
 
         dbHelper.createPaciente(idPat, nombreStr,dateStr,sexo,dirStr);
         Constants.typeEvent="Emergencia";
-        startActivity(new Intent(pacienteSignup.this, falls.class));
-        //startActivity(new Intent(pacienteSignup.this, Home.class));
+        startActivity(new Intent(pacienteSignup.this, Home.class));
     }
 
     public void generateIdPaciente(){
