@@ -305,6 +305,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void updateEvent(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + RegistroEventos.TABLE_REGISTROEVENTOS + " SET " + RegistroEventos.KEY_STATUS  + "= '1' WHERE " + RegistroEventos.KEY_ID_EVENTO + "='Evento_" + id +"'");
+    }
+
     private String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());

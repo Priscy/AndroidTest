@@ -42,7 +42,7 @@ public class Tab2Caidas extends Fragment {
     public void showCaidas(){
         List<RegistroEventos> eventos= dbHelper.getCaidas();
         for(RegistroEventos evento: eventos){
-            eventoStr = new StringBuilder("Caida").append(" de ").append(evento.getId_paciente()).append(" a las ").append(evento.getFechaHora()).append(evento.getId_accidente()).append("\n").toString();
+            eventoStr = new StringBuilder("Caida el ").append(evento.getFechaHora()).append(" ").append(evento.getStatus()).append("\n").toString();
             listaAccidentes.append(eventoStr);
         }
     }

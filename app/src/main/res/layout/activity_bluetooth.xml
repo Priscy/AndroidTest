@@ -14,7 +14,8 @@
         android:id="@+id/layoutBluetooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/el1"
@@ -61,8 +62,8 @@
             android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NEXT"
-            android:onClick="next"/>
+            android:onClick="next"
+            android:text="NEXT" />
 
     </LinearLayout>
 

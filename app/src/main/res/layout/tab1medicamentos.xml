@@ -43,11 +43,12 @@
         android:timePickerMode="spinner" />
 
     <Button
-        android:id="@+id/btnAgendar"
+        android:id="@+id/btnAgenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/timePicker"
         android:layout_below="@+id/timePicker"
-        android:text="Agendar Medicamento" />
+        android:text="Agendar Medicamento"
+        />
 
 </RelativeLayout>

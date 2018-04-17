@@ -36,16 +36,19 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class BluetoothController extends AppCompatActivity {
+public class BluetoothController extends AppCompatActivity{
     private final static int REQUEST_ENABLE_BT = 1;
 
     BluetoothAdapter mBluetoothAdapter;
     BluetoothManager bluetoothManager;
     BluetoothGatt mBluetoothGatt;
 
+
+
     Handler handler = new Handler();
     Intent intent;
     LinearLayout layoutBluetooth,layoutSplash;
+    Context c;
 
     Button startScann;
     Button btnConect;
@@ -74,6 +77,13 @@ public class BluetoothController extends AppCompatActivity {
     int deviceIndex = 0;
     ArrayList<BluetoothDevice> devicesDiscovered = new ArrayList<BluetoothDevice>();
     private static final long SCAN_PERIOD = 10000;
+
+    public  BluetoothController(){
+    }
+    public BluetoothController(Context context){
+        this.c=context;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +198,6 @@ public class BluetoothController extends AppCompatActivity {
             }
 
         }
-
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
 
@@ -287,6 +296,11 @@ public class BluetoothController extends AppCompatActivity {
                     }
                 });
             }
+
+            if(Constants.vibrate == true){
+                setValueVibration();
+            }
+
         } else  if (CUSTOM_CHAR_READ.equals(characteristic.getUuid())){
             final int value= characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,1);
             BluetoothController.this.runOnUiThread(new Runnable() {
@@ -307,14 +321,17 @@ public class BluetoothController extends AppCompatActivity {
         mBluetoothGatt.readCharacteristic(characteristic);
     }
 
+
     public void setValueVibration(){
-        BluetoothGattCharacteristic characteristic =
-                mBluetoothGatt.getService(CUSTOM_SERVICE)
-                        .getCharacteristic(CUSTOM_CHAR_WRITE);
+        BluetoothGattCharacteristic characteristic = Constants.mBluetoothGatt.getService(CUSTOM_SERVICE)
+                .getCharacteristic(CUSTOM_CHAR_WRITE);
         characteristic.setValue(10,BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-        mBluetoothGatt.writeCharacteristic(characteristic);
+        Constants.mBluetoothGatt.writeCharacteristic(characteristic);
         broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+        Log.d(Constants.TAG,"Vibrating");
+        Log.d(Constants.TAG, "Setting vibration on");
     }
+
 
     public void startScan(final boolean enable){
         final BluetoothLeScanner btScanner = mBluetoothAdapter.getBluetoothLeScanner();
@@ -334,7 +351,6 @@ public class BluetoothController extends AppCompatActivity {
             btScanner.startScan(leScanCallback);
             Log.d(Constants.TAG,"START SCAN");
         } else {
-            //devicesTextView.append("Scanning stopped" + "\n");
             btScanner.stopScan(leScanCallback);
         }
     }
@@ -343,11 +359,13 @@ public class BluetoothController extends AppCompatActivity {
         devicesTextView.append("Trying to connect to device with index: " + indexInput.getText() + "\n");
         int deviceIndex = Integer.parseInt(indexInput.getText().toString());
         mBluetoothGatt = devicesDiscovered.get(deviceIndex).connectGatt(this, true, mGattCallback);
+        Constants.mBluetoothGatt = mBluetoothGatt;
 
 
     }
 
     public void next(View view){
+        Log.d(Constants.TAG, CUSTOM_SERVICE.toString());
         Log.d(Constants.TAG,"Btn next clicked");
         startActivity(new Intent(BluetoothController.this, pacienteSignup.class));
         //startActivity(new Intent(BluetoothController.this, falls.class));
@@ -356,7 +374,7 @@ public class BluetoothController extends AppCompatActivity {
     }
 
 
-    public UUID convertFromInteger(int i) {
+    public static UUID convertFromInteger(int i) {
         final long MSB = 0x0000000000001000L;
         final long LSB = 0x800000805f9b34fbL;
         long value = i & 0xFFFFFFFF;

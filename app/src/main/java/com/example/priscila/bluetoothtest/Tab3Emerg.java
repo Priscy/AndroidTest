@@ -40,7 +40,7 @@ public class Tab3Emerg extends Fragment {
     public void showEmergencias(){
         List<RegistroEventos> eventos= dbHelper.getEmergencias();
         for(RegistroEventos evento: eventos){
-            eventoStr = new StringBuilder("Emergencia").append(" de ").append(evento.getId_paciente()).append(" a las ").append(evento.getFechaHora()).append(evento.getId_accidente()).append("\n").toString();
+            eventoStr = new StringBuilder("Emergencia el ").append(evento.getFechaHora()).append(" ").append(evento.getStatus()).append("\n").toString();
             listaAccidentes.append(eventoStr);
         }
     }

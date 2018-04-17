@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -22,14 +23,17 @@ public class falls extends AppCompatActivity {
     String idEvento;
     int contEvento;
     int duration = 0;
+    Button btCancelar;
+    boolean canceled = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_falls);
 
-       text = (TextView)findViewById(R.id.tv1);
-
+        text = (TextView)findViewById(R.id.tv1);
         pb = (ProgressBar)findViewById(R.id.progressBar);
+        btCancelar = (Button)findViewById(R.id.btnCancelar);
+
         if (Constants.typeEvent =="Caida"){
             text.setText("Caída detectada");
             duration=10000;
@@ -40,13 +44,21 @@ public class falls extends AppCompatActivity {
             registrarEmergencia();
         }
 
+        btCancelar.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                cancelarEvento(contEvento);
+            }
+        });
+
         objectAnimator = ObjectAnimator.ofInt(pb, "progress", 0,100);
         objectAnimator.setDuration(duration);
         objectAnimator.start();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(falls.this, Confirmation.class));
+                if(canceled != true) {
+                    startActivity(new Intent(falls.this, Confirmation.class));
+                }
             }
         }, duration);
 
@@ -75,6 +87,14 @@ public class falls extends AppCompatActivity {
     public void registrarEmergencia(){
         generateIdEvento();
         dbHelper.createRegistroEventos(idEvento, "Accidente_02", pacienteSignup.idPat, 0);
+
+    }
+
+    public void cancelarEvento(int cont){
+        canceled = true;
+        dbHelper.updateEvent(cont);
+        finish();
+        startActivity(new Intent(falls.this, Home.class));
 
     }
 

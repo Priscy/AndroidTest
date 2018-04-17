@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pixky Health</string>
+    <string name="app_name">Pixki Health</string>
     <string name="title_activity_falls">falls</string>
     <string name="title_activity_confirmation">Confirmation</string>
     <string name="title_activity_main">MainActivity</string>
