@@ -1,4 +1,4 @@
-package com.example.priscila.bluetoothtest;
+package com.example.priscila.bluetoothtest.controller;
 import android.Manifest;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -30,6 +30,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
+import com.example.priscila.bluetoothtest.R;
 
 import java.util.ArrayList;
 import java.util.List;

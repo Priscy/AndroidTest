@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
-import android.nfc.Tag;
 import android.util.Log;
 
-import com.example.priscila.bluetoothtest.Constants;
 import com.example.priscila.bluetoothtest.model.Accidente;
 import com.example.priscila.bluetoothtest.model.Dispositivo;
 import com.example.priscila.bluetoothtest.model.Expediente;
@@ -77,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //DETALLES RECETA TABLE
     private static final String CREATE_TABLE_DETALLESRECETA = "CREATE TABLE " + TABLE_DETALLESRECETA +
             "(" + KEY_FRECUENCIA + " INTEGER," + KEY_HORAINICIO + " STRFTIME," +
-            KEY_ID_RECETA + " TEXT," + KEY_ID_MEDICINA + " TEXT," +
+            KEY_ID_RECETA + " INTEGER," + KEY_ID_MEDICINA + " TEXT," +
             " FOREIGN KEY (" + KEY_ID_RECETA + ") REFERENCES " + Receta.TABLE_RECETA+ "(" + Receta.KEY_ID_RECETA+")," +
             " FOREIGN KEY (" + KEY_ID_MEDICINA + ") REFERENCES " + Medicina.TABLE_MEDICINA+ "(" + Medicina.KEY_ID_MEDICINA+ "))";
 
@@ -316,6 +314,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+    public long createMedicine(String nombre){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Medicina.KEY_NOMBRE, nombre);
+
+        long medicina_id = db.insert(Medicina.TABLE_MEDICINA, null, values);
+        Log.d(Constants.TAG, "Medicina: " + nombre+ " registrada");
+        return medicina_id;
+    }
+
+    public List<Medicina> getMedicinas(String searchMedicina){
+        Log.d(Constants.TAG, "Inside Get medicinas: " + searchMedicina);
+        List<Medicina> medicinas= new ArrayList<Medicina>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String count = "SELECT count(*) FROM " + Medicina.TABLE_MEDICINA + " WHERE " + Medicina.KEY_NOMBRE + " LIKE '%" + searchMedicina + "%'";
+        Cursor mcursor = db.rawQuery(count, null);
+        mcursor.moveToFirst();
+        int icount = mcursor.getInt(0);
+        if(icount > 0) {
+            String selectQuery = "SELECT * FROM " + Medicina.TABLE_MEDICINA + " WHERE " + Medicina.KEY_NOMBRE + " LIKE '%" + searchMedicina + "%'" + " ORDER BY " + Medicina.KEY_ID_MEDICINA + " DESC";
+            Log.e(LOG, selectQuery);
+
+            Cursor c = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (c.moveToFirst()) {
+                do {
+                    Medicina medicina= new Medicina();
+                    medicina.setNombre(c.getString(c.getColumnIndex(Medicina.KEY_NOMBRE)));
+                    medicinas.add(medicina);
+                } while (c.moveToNext());
+            }
+        }
+        return medicinas;
+
+    }
+
+    public long createReceta(String id_paciente, String id_contactoAlta, String fecha){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Receta.KEY_ID_PACIENTE, id_paciente);
+        values.put(Receta.KEY_ID_CONTACTOALTA, id_contactoAlta);
+        values.put(Receta.KEY_FECHA, fecha);
+
+        long receta_id = db.insert(Receta.TABLE_RECETA, null, values);
+        Log.d(Constants.TAG, "Receta registrada");
+        return receta_id;
+    }
+
+    public long createDetallesReceta(String id_paciente, String id_contactoAlta, String fecha){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Receta.KEY_ID_PACIENTE, id_paciente);
+        values.put(Receta.KEY_ID_CONTACTOALTA, id_contactoAlta);
+        values.put(Receta.KEY_FECHA, fecha);
+
+        long receta_id = db.insert(Receta.TABLE_RECETA, null, values);
+        Log.d(Constants.TAG, "Receta registrada");
+        return receta_id;
+    }
+
 
 
 

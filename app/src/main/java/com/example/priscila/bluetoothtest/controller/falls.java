@@ -1,18 +1,16 @@
-package com.example.priscila.bluetoothtest;
+package com.example.priscila.bluetoothtest.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.widget.ProgressBar;
 import android.os.Handler;
 
-import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
+import com.example.priscila.bluetoothtest.R;
 
 public class falls extends AppCompatActivity {
     DatabaseHelper dbHelper = new DatabaseHelper(this);

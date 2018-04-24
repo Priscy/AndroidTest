@@ -8,7 +8,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.priscila.bluetoothtest.Home$PlaceholderFragment">
+    tools:context="com.example.priscila.bluetoothtest.controller.Home$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
@@ -16,39 +16,14 @@
         android:layout_height="wrap_content"
         android:text="Tab Medicamentos" />
 
-    <EditText
-        android:id="@+id/nombreMedicina"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/section_label"
-        android:layout_below="@+id/section_label"
-        android:layout_marginTop="59dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Nombre Medicamento"/>
-
-    <Spinner
-        android:id="@+id/frecuencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/nombreMedicina"
-        android:layout_below="@+id/nombreMedicina" />
-
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_alignStart="@+id/nombreMedicina"
-        android:layout_below="@id/frecuencia"
-        android:timePickerMode="spinner" />
-
     <Button
-        android:id="@+id/btnAgenda"
+        android:id="@+id/btnAgendarMed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/timePicker"
-        android:layout_below="@+id/timePicker"
-        android:text="Agendar Medicamento"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="117dp"
+        android:text="Agendar Medicamento" />
+
 
 </RelativeLayout>

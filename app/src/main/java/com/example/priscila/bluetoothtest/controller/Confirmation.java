@@ -1,4 +1,4 @@
-package com.example.priscila.bluetoothtest;
+package com.example.priscila.bluetoothtest.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,10 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.priscila.bluetoothtest.R;
 import com.example.priscila.bluetoothtest.model.Mensaje;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

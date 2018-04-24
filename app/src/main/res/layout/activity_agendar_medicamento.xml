@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.priscila.bluetoothtest.controller.AgendarMedicamento">
+
+    <com.example.priscila.bluetoothtest.controller.CustomAutoCompleteView
+        android:id="@+id/myautocomplete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/section_label"
+        android:layout_marginTop="12dp"
+        android:completionThreshold="1"></com.example.priscila.bluetoothtest.controller.CustomAutoCompleteView>
+
+    <Spinner
+        android:id="@+id/frecuencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addMedicamento" />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addMedicamento"
+        android:layout_marginTop="46dp"
+        android:timePickerMode="spinner" />
+
+    <Button
+        android:id="@+id/btnAgenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/timePicker"
+        android:layout_below="@+id/timePicker"
+        android:text="Agendar Medicamento"
+        />
+
+
+
+    <Button
+        android:id="@+id/addMedicamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/section_label"
+        android:layout_marginTop="87dp"
+        android:text="Agregar" />
+
+</RelativeLayout>

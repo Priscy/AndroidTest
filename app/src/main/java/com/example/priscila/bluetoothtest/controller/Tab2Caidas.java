@@ -1,20 +1,23 @@
-package com.example.priscila.bluetoothtest;
+package com.example.priscila.bluetoothtest.controller;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.example.priscila.bluetoothtest.R;
 import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
 import com.example.priscila.bluetoothtest.model.RegistroEventos;
 
 import java.util.List;
+import android.widget.TextView;
+import android.database.sqlite.SQLiteDatabase;
 
 
-public class Tab3Emerg extends Fragment {
+
+
+public class Tab2Caidas extends Fragment {
     DatabaseHelper dbHelper;
     TextView listaAccidentes;
     String eventoStr;
@@ -23,9 +26,9 @@ public class Tab3Emerg extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dbHelper = new DatabaseHelper(getActivity());
-        View rootView = inflater.inflate(R.layout.tab3emerg, container, false);
-        listaAccidentes= (TextView)rootView.findViewById(R.id.listaEmer);
-        showEmergencias();
+        View rootView = inflater.inflate(R.layout.tab2caidas, container, false);
+        listaAccidentes= (TextView)rootView.findViewById(R.id.listaAcc);
+        showCaidas();
         return rootView;
     }
 
@@ -33,14 +36,14 @@ public class Tab3Emerg extends Fragment {
     public void onResume(){
         super.onResume();
         listaAccidentes.setText("");
-        showEmergencias();
+        showCaidas();
 
     }
 
-    public void showEmergencias(){
-        List<RegistroEventos> eventos= dbHelper.getEmergencias();
+    public void showCaidas(){
+        List<RegistroEventos> eventos= dbHelper.getCaidas();
         for(RegistroEventos evento: eventos){
-            eventoStr = new StringBuilder("Emergencia el ").append(evento.getFechaHora()).append(" ").append(evento.getStatus()).append("\n").toString();
+            eventoStr = new StringBuilder("Caida el ").append(evento.getFechaHora()).append(" ").append(evento.getStatus()).append("\n").toString();
             listaAccidentes.append(eventoStr);
         }
     }

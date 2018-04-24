@@ -7,36 +7,27 @@ package com.example.priscila.bluetoothtest.model;
 public class Medicina {
     public static final String TABLE_MEDICINA = "Medicina";
     public static final String KEY_ID_MEDICINA = "id_medicina";
-    private static final String KEY_DESCRIPCION = "descripcion";
+    public static final String KEY_NOMBRE = "nombre";
 
-    String id_medicina;
-    String descripcion;
+    String nombre;
 
     public static final String CREATE_TABLE_MEDICINA = "CREATE TABLE " + TABLE_MEDICINA +
-            "(" + KEY_ID_MEDICINA + " TEXT PRIMARY KEY," + KEY_DESCRIPCION + " TEXT" + ")";
+            "(" + KEY_ID_MEDICINA + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NOMBRE + " TEXT" + ")";
 
     public Medicina(){
 
     }
 
-    public Medicina(String id_medicina, String descripcion) {
-        this.id_medicina = id_medicina;
-        this.descripcion = descripcion;
+    public Medicina(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getId_medicina() {
-        return id_medicina;
+
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setId_medicina(String id_medicina) {
-        this.id_medicina = id_medicina;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

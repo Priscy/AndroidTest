@@ -1,4 +1,4 @@
-package com.example.priscila.bluetoothtest;
+package com.example.priscila.bluetoothtest.controller;
 
 import android.bluetooth.BluetoothGatt;
 

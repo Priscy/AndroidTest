@@ -1,4 +1,4 @@
-package com.example.priscila.bluetoothtest;
+package com.example.priscila.bluetoothtest.controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
+import com.example.priscila.bluetoothtest.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
