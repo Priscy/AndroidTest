@@ -6,9 +6,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
-/**
- * Created by Priscila on 17/04/2018.
- */
 
 public class CustomAutoCompleteTextChangedListener implements TextWatcher {
     public static final String TAG = "CustomAutoCompleteTextChangedListener.java";
@@ -43,9 +40,9 @@ public class CustomAutoCompleteTextChangedListener implements TextWatcher {
         agendarMedicamento.item = agendarMedicamento.getMedFromDb(userInput.toString());
 
         // update the adapater
-        agendarMedicamento.myAdapter.notifyDataSetChanged();
-        agendarMedicamento.myAdapter = new ArrayAdapter<String>(agendarMedicamento, android.R.layout.simple_dropdown_item_1line, agendarMedicamento.item);
-        agendarMedicamento.myAutoComplete.setAdapter(agendarMedicamento.myAdapter);
+        agendarMedicamento.adapterMedicinas.notifyDataSetChanged();
+        agendarMedicamento.adapterMedicinas = new ArrayAdapter<String>(agendarMedicamento, android.R.layout.simple_dropdown_item_1line, agendarMedicamento.item);
+        agendarMedicamento.myAutoComplete.setAdapter(agendarMedicamento.adapterMedicinas);
 
     }
 }

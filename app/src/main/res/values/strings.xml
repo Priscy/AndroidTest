@@ -23,4 +23,17 @@
         completions."
     </string>
     <string name="title_activity_agendar_medicamento">AgendarMedicamento</string>
+
+    <string-array name="frecuencia_array">
+        <item>4 horas</item>
+        <item>6 horas</item>
+        <item>8 horas</item>
+        <item>12 horas</item>
+        <item>24 horas</item>
+    </string-array>
+    <string name="title_activity_login"></string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
 </resources>
