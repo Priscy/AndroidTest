@@ -368,7 +368,7 @@ public class BluetoothController extends AppCompatActivity{
     public void next(View view){
         Log.d(Constants.TAG, CUSTOM_SERVICE.toString());
         Log.d(Constants.TAG,"Btn next clicked");
-        startActivity(new Intent(BluetoothController.this, pacienteSignup.class));
+        startActivity(new Intent(BluetoothController.this, Home.class));
         //startActivity(new Intent(BluetoothController.this, falls.class));
 
 

@@ -126,20 +126,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long createPaciente(String id_paciente, String nombre, String fechaNacimiento, String sexo, String dir){
-       // String fechaStr= dateformat.format(fechaNacimiento);
+    public long createPaciente(String id_paciente, String nombre, String email, String password, String fechaNacimiento, String sexo){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Paciente.KEY_ID_PACIENTE, id_paciente);
         values.put(Paciente.KEY_NOMBRE, nombre);
+        values.put(Paciente.KEY_EMAIL, email);
+        values.put(Paciente.KEY_PASS, password);
         values.put(Paciente.KEY_FECHANACIMIENTO, fechaNacimiento);
         values.put(Paciente.KEY_SEXO, sexo);
-        values.put(Paciente.KEY_DIRECCION, dir);
 
         long paciente_id = db.insert(Paciente.TABLE_PACIENTE, null, values);
-        Log.d(Constants.TAG, "Paciente creado");
+        Log.d(Constants.TAG, "Paciente "+ nombre + " creado");
         return paciente_id;
-
     }
 
     public String getLastPaciente(){
@@ -376,9 +375,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(Constants.TAG, "Receta registrada");
         return receta_id;
     }
-
-
-
 
     @Override
     public SQLiteDatabase getWritableDatabase() {

@@ -41,7 +41,6 @@
             android:name=".controller.Home"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".controller.pacienteSignup" />
 
         <service android:name=".fbase.FbService">
             <intent-filter>

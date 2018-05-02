@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.os.Handler;
 
 import com.example.priscila.bluetoothtest.R;
+import com.example.priscila.bluetoothtest.RegisterActivity;
 
 public class falls extends AppCompatActivity {
     DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -65,7 +66,7 @@ public class falls extends AppCompatActivity {
 
     public void registrarCaida(){
         generateIdEvento();
-        dbHelper.createRegistroEventos(idEvento, "Accidente_01", pacienteSignup.idPat, 0);
+        dbHelper.createRegistroEventos(idEvento, "Accidente_01", RegisterActivity.idPat, 0);
     }
 
     public void generateIdEvento(){
@@ -84,7 +85,7 @@ public class falls extends AppCompatActivity {
 
     public void registrarEmergencia(){
         generateIdEvento();
-        dbHelper.createRegistroEventos(idEvento, "Accidente_02", pacienteSignup.idPat, 0);
+        dbHelper.createRegistroEventos(idEvento, "Accidente_02",RegisterActivity.idPat, 0);
 
     }
 

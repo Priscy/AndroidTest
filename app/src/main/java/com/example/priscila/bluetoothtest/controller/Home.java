@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.priscila.bluetoothtest.R;
+import com.example.priscila.bluetoothtest.RegisterActivity;
 
 
 public class Home extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle(pacienteSignup.nombreStr);
+        setTitle(RegisterActivity.nombreStr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

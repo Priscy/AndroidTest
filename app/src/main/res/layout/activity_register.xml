@@ -27,6 +27,16 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <ProgressBar
+            android:id="@+id/registerProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminateTint="@android:color/white"
+            android:indeterminate="true"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/register_btn"
@@ -36,7 +46,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="370dp"
             android:background="@drawable/input_background"
             android:text="Crear cuenta"
             android:textAllCaps="false"
@@ -72,17 +82,6 @@
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
-
-        <ProgressBar
-            android:id="@+id/registerProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center_horizontal"
-            android:indeterminate="true"
-            android:visibility="invisible" />
-
 
     </LinearLayout>
 
