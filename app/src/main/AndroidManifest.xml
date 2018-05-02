@@ -55,7 +55,15 @@
 
         <activity android:name=".controller.AgendarMedicamento" />
         <activity android:name=".controller.BluetoothController" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+
+        <receiver android:name=".AlarmReceiver" />
+
+        <service
+            android:name=".RingtonePlayingService"
+            android:enabled="true"></service>
+
+        <activity android:name=".MedicineConfirmation"></activity>
     </application>
 
 </manifest>

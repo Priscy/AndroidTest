@@ -10,75 +10,104 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.priscila.bluetoothtest.controller.AgendarMedicamento">
 
-    <com.example.priscila.bluetoothtest.controller.CustomAutoCompleteView
-        android:id="@+id/myautocomplete"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="18dp"
-        android:layout_toEndOf="@+id/textView2"
-        android:completionThreshold="1"></com.example.priscila.bluetoothtest.controller.CustomAutoCompleteView>
 
-    <Spinner
-        android:id="@+id/frecuencia_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/myautocomplete"
-        android:layout_below="@+id/myautocomplete" />
+        <TextView
+            android:id="@+id/register_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="80dp"
+            android:text="Agendar Medicamento"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp" />
 
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_alignStart="@+id/frecuencia_spinner"
-        android:layout_alignTop="@+id/textView4"
-        android:timePickerMode="spinner" />
+        <com.example.priscila.bluetoothtest.controller.CustomAutoCompleteView
+            android:id="@+id/myautocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="250dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="110dp"
+            android:background="@drawable/input_background"
+            android:hint="Medicamento..."
+            android:inputType="text"
+            android:paddingBottom="12dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="12dp"
+            android:textSize="16sp"
+            android:completionThreshold="1" />
 
-    <Button
-        android:id="@+id/btnAgenda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="87dp"
-        android:text="Agendar Medicamento" />
+        <Spinner
+            android:id="@+id/frecuencia_spinner"
+            android:layout_below="@+id/myautocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="12dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="12dp"
+            android:background="@drawable/input_background"
+            android:spinnerMode="dialog"
+            android:prompt="@string/hint_resource"
+            android:textSize="16sp"
+            />
+
+        <EditText
+            android:id="@+id/hora_inicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/frecuencia_spinner"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/input_background"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Hora Inicio..."
+            android:paddingBottom="12dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="12dp"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnAgenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="12dp"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/color_button"
+            android:text="Agendar Medicamento"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
 
     <Button
         android:id="@+id/addMedicamento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/myautocomplete"
-        android:layout_alignParentEnd="true"
-        android:layout_alignRight="@id/myautocomplete"
+        android:layout_alignEnd="@+id/frecuencia_spinner"
+        android:layout_alignTop="@+id/myautocomplete"
+        android:layout_gravity="right"
+        android:background="@drawable/disabled_button"
         android:onClick="agregarMedicina"
         android:text="Agregar"
-        android:visibility="invisible" />
+        android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/addMedicamento"
-        android:layout_alignBottom="@+id/addMedicamento"
-        android:layout_alignParentStart="true"
-        android:text="Medicamento:" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/frecuencia_spinner"
-        android:layout_alignParentStart="true"
-        android:text="Frecuencia:" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="12dp"
-        android:text="Hora inicio:" />
 
 </RelativeLayout>

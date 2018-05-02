@@ -18,12 +18,18 @@
 
     <Button
         android:id="@+id/btnAgendarMed"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="117dp"
-        android:text="Agendar Medicamento" />
+        android:layout_marginBottom="70dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/color_button"
+        android:text="Agendar Medicamento"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

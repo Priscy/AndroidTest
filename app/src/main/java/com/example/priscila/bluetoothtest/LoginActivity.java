@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.priscila.bluetoothtest.controller.BluetoothController;
+import com.example.priscila.bluetoothtest.controller.Constants;
 import com.example.priscila.bluetoothtest.controller.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     String current_id;
+    String current_name;
     Map<String, Object> tokenMap;
 
 

@@ -23,6 +23,7 @@ import com.example.priscila.bluetoothtest.controller.BluetoothController;
 import com.example.priscila.bluetoothtest.controller.Constants;
 import com.example.priscila.bluetoothtest.controller.DatabaseHelper;
 
+import com.example.priscila.bluetoothtest.controller.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -166,9 +167,15 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         mRegisterProgressBar.setVisibility(View.INVISIBLE);
-                                        Intent loginIntent = new Intent(RegisterActivity.this, BluetoothController.class);
-                                        startActivity(loginIntent);
-                                        finish();
+                                        if (tipoUsuarioActivo.equals("Paciente")) {
+                                            Intent loginIntent = new Intent(RegisterActivity.this, BluetoothController.class);
+                                            startActivity(loginIntent);
+                                            finish();
+                                        } else if (tipoUsuarioActivo.equals("Familiar") || tipoUsuarioActivo.equals("Médico")){
+                                            Intent loginIntent = new Intent(RegisterActivity.this, Home.class);
+                                            startActivity(loginIntent);
+                                            finish();
+                                        }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -277,9 +284,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         dbHelper.createPaciente(idPat, nombreStr, email, password,dateStr,sexo);
     }
 
-    public void registrarPacienteFirebase(){
-
-    }
 
     public void generateIdPaciente(){
         String lastidPat = dbHelper.getLastPaciente();
