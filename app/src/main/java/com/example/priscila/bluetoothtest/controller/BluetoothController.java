@@ -52,12 +52,9 @@ public class BluetoothController extends AppCompatActivity{
     LinearLayout layoutBluetooth,layoutSplash;
     Context c;
 
-    Button startScann;
     Button btnConect;
     EditText indexInput;
-    TextView devicesTextView;
-    TextView stateTextView;
-    TextView fallsTv;
+    TextView devicesTextView, stateTextView, fallsTv;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     private static final int ALERT_HIGH = 2;
 
@@ -99,12 +96,6 @@ public class BluetoothController extends AppCompatActivity{
         layoutBluetooth.setVisibility(LinearLayout.GONE);
         layoutSplash.setVisibility(LinearLayout.VISIBLE);
 
-        startScann = (Button) findViewById(R.id.scanBtn);
-        startScann.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startScan(true);
-            }
-        });
 
         devicesTextView = (TextView) findViewById(R.id.devicesTextView);
         devicesTextView.setMovementMethod(new ScrollingMovementMethod());
@@ -139,6 +130,14 @@ public class BluetoothController extends AppCompatActivity{
             });
             builder.show();
         }
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                startScan(true);
+            }
+        }, 2000);
+
     }
 
 
