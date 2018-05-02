@@ -1,5 +1,6 @@
 package com.example.priscila.bluetoothtest.controller;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.priscila.bluetoothtest.LoginActivity;
 import com.example.priscila.bluetoothtest.R;
 import com.example.priscila.bluetoothtest.RegisterActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class Home extends AppCompatActivity {
@@ -24,6 +27,7 @@ public class Home extends AppCompatActivity {
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private FirebaseAuth mAuth;
 
 
     private ViewPager mViewPager;
@@ -33,6 +37,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
         setTitle(RegisterActivity.nombreStr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,14 +55,6 @@ public class Home extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
 
     }
@@ -77,6 +74,10 @@ public class Home extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            mAuth.signOut();
+            Intent loginIntent = new Intent(Home.this, LoginActivity.class);
+            startActivity(loginIntent);
+            finish();
             return true;
         }
 

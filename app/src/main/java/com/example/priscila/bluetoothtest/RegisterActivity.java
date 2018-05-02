@@ -168,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                         mRegisterProgressBar.setVisibility(View.INVISIBLE);
                                         Intent loginIntent = new Intent(RegisterActivity.this, BluetoothController.class);
                                         startActivity(loginIntent);
+                                        finish();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
